@@ -1,44 +1,51 @@
 #include <Arduino.h>
-#include <morse.h>
 
 #define LED_RED 10
+
+#define LED_T 20
+#define LED_STEP_T 1
+#define LED_SPEED_T 100
 
 void setup()
 {
   pinMode(LED_RED, OUTPUT);
 }
 
-
+uint16_t ledOn = 0, ledOff = LED_T - 0, i = 0;
+uint8_t dir = 0;
+float sinVal;
 
 void loop()
 {
-  uint8_t i;
-  for (i = 0; i < 3; i++) // Wysłanie znaku 'S'
+  digitalWrite(LED_RED, HIGH);
+  delay(ledOn);
+  digitalWrite(LED_RED, LOW);
+  delay(ledOff);
+
+  if ((i % (LED_SPEED_T / LED_T)) == 0)
   {
-    digitalWrite(LED_RED, HIGH);
-    delay(M_KROPKA_T);
-    digitalWrite(LED_RED, LOW);
-    delay(M_PAUZA_T);
+    if (dir == 0)
+    {
+      ledOn += LED_STEP_T;
+      ledOff -= LED_STEP_T;
+      if (ledOn >= LED_T)
+      {
+        dir = 1;
+      }
+    }
+    else
+    {
+      ledOn -= LED_STEP_T;
+      ledOff += LED_STEP_T;
+      if (ledOn == 0)
+      {
+        dir = 0;
+      }
+    }
+
+    // sinVal = (sin((i % 180) * (3.1412 / 180)));
+    // ledOn = int(sinVal * LED_T);
+    // ledOff = LED_T - ledOn;
   }
-  // Wysłanie znaku '0'
-  i = 0;
-  do
-  {
-    digitalWrite(LED_RED, HIGH);
-    delay(M_KRESKA_T);
-    digitalWrite(LED_RED, LOW);
-    delay(M_PAUZA_T);
-    i++;
-  } while (i < 3);
-  // Wysłanie znaku 'S'
-  i = 0;
-  while (i < 3)
-  {
-    digitalWrite(LED_RED, HIGH);
-    delay(M_KROPKA_T);
-    digitalWrite(LED_RED, LOW);
-    delay(M_PAUZA_T);
-    i++;
-  }
-  delay(M_SPACJA_T);
+  i++;
 }
