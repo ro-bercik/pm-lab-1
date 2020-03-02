@@ -1,90 +1,37 @@
 #include <Arduino.h>
-#define CAR_RED 12
-#define CAR_YELLOW 11
-#define CAR_GREEN 10
-#define PED_RED 9
-#define PED_GREEN 8
 
-#define PED_BUTTON 2
+uint8_t ledPin[] = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+uint8_t ledDelay = 65;
+uint8_t direction = 1;
+uint8_t currentLED = 0;
+unsigned long changeTime;
 
-#define CHANGE_TIME 10000
-#define STATE_1_TIME 10000
-#define STATE_2_TIME 1000
-#define STATE_3_TIME 7000
-#define STATE_4_TIME 1000
+void changeLED();
 
-enum LightState_t { GREEN, YELLOW, YELLOW_RED, RED };
-LightState_t lightState = GREEN;  // Stan sygnalizatora
-unsigned long changeTime = 0;     // Czas ostatniej zmiany świateł
-
-void setup() { // Konfiguracja trybu pracy wyjść
-  pinMode(CAR_RED, OUTPUT);
-  pinMode(CAR_YELLOW, OUTPUT);
-  pinMode(CAR_GREEN, OUTPUT);
-  pinMode(PED_RED, OUTPUT);
-  pinMode(PED_GREEN, OUTPUT);
-  pinMode(PED_BUTTON, INPUT); //
-  // Ustalenie początkowej wartości na wyjściach sterujących światła
-  digitalWrite(CAR_RED, LOW);
-  digitalWrite(CAR_YELLOW, LOW);
-  digitalWrite(CAR_GREEN, HIGH);
-  digitalWrite(PED_RED, HIGH);
-  digitalWrite(PED_GREEN, LOW);
-  changeTime = millis();
-}
-void loop() {                               // Pętla główna programu
-  uint8_t state = digitalRead(PED_BUTTON); // Odczyt stanu wejścia przycisku
-  switch (lightState) {
-  case GREEN:
-    digitalWrite(CAR_GREEN, HIGH);
-    digitalWrite(CAR_YELLOW, LOW);
-    digitalWrite(CAR_RED, LOW);
-    digitalWrite(PED_RED, HIGH);
-    digitalWrite(PED_GREEN, LOW);           
-    if(((millis() - changeTime) > STATE_1_TIME) || (state == HIGH)){
-      lightState = YELLOW;
-      changeTime = millis();
-    }
-    break;
-  case YELLOW:
-    digitalWrite(CAR_GREEN, LOW);
-    digitalWrite(CAR_YELLOW, HIGH);
-    digitalWrite(CAR_RED, LOW);
-    digitalWrite(PED_RED, HIGH);
-    digitalWrite(PED_GREEN, LOW);
-    if((millis() - changeTime) > STATE_2_TIME){
-      lightState = RED;
-      changeTime = millis();
-    }
-    break;
-  case RED:
-    digitalWrite(CAR_GREEN, LOW);
-    digitalWrite(CAR_YELLOW, LOW);
-    digitalWrite(CAR_RED, HIGH);
-    digitalWrite(PED_RED, LOW);
-    digitalWrite(PED_GREEN, HIGH);
-    if ((millis() - changeTime) > (STATE_3_TIME)){
-     // Wykonanie trzykrotnego błysku światła zielonego pieszych przed zmianą na czerwone
-      for(uint8_t i = 0; i < 3; i++){
-        digitalWrite(PED_GREEN, LOW);
-        delay(500);
-        digitalWrite(PED_GREEN, HIGH);
-        delay(500);
-      }      
-      lightState = YELLOW_RED;
-      changeTime = millis();
-    }
-    break;
-  case YELLOW_RED:
-    digitalWrite(CAR_GREEN, LOW);
-    digitalWrite(CAR_YELLOW, HIGH);
-    digitalWrite(CAR_RED, HIGH);
-    digitalWrite(PED_RED, HIGH);
-    digitalWrite(PED_GREEN, LOW);
-    if((millis() - changeTime) > STATE_4_TIME){
-      lightState = GREEN;
-      changeTime = millis();
-    }
-    break;
+void setup() {
+  for (int i = 0; i < 10; i++)  {
+    pinMode(ledPin[i], OUTPUT);
   }
 }
+
+void loop() {
+  if ((millis() - changeTime) > ledDelay) {
+    changeLED();
+    changeTime = millis();
+  }
+}
+
+void changeLED() {
+  for (int x = 0; x < 10; x++) {          // Wyłączenie wszystkich diod
+    digitalWrite(ledPin[x], LOW);
+  }  
+  digitalWrite(ledPin[currentLED], HIGH); // Włączenie kolejnej diody LED
+  currentLED += direction;                // Wskazanie na kolejną diode LED
+  if (currentLED == 9) {                  // Zmiana kierunku
+    direction = -1;
+  }
+  if (currentLED == 0) {
+    direction = 1;
+  }
+}
+

@@ -32,7 +32,7 @@ Pytanie:    *Jakie niedogodności z punktu widzenia kierowców są obecne w prog
 Odpowiedź:  ...
 
 ## Zadanie 2-3-2:
-Pytanie:    **  
+Pytanie:    *Czy możliwe jest sterowanie stanem niskim (LOW) diod LED?*  
 Odpowiedź:  ...
 
 # Zadania rozszerzajace
