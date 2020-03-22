@@ -2,8 +2,8 @@
 Nazwa:  pm-lab-1  
 Autor:  Paweł Dąbal (pawel.dabal@wat.edu.pl)  
 Opis:   Projekt bazowy repozytorium na pierwsze spotkanie laboratoryjne z przedmiotu *Programowanie mikrokontrolerów*.  
-Wersja: v0.1  
-Data:   29.02.2020 r.  
+Wersja: v1.0  
+Data:   22.03.2020 r.  
 
 # Informacje o studencie
 Imię i nazwisko studenta:   Imię Nazwisko  
@@ -36,6 +36,16 @@ Pytanie:    *Czy możliwe jest sterowanie stanem niskim (LOW) diod LED?*
 Odpowiedź:  ...
 
 # Zadania rozszerzajace
-## Zadanie 2-3-7:
-Pytanie:    **  
+## Zadanie 3-1:
+Pytanie:    *Określić wady i zalety operowania na rejestrach mikrokontrolera.*  
 Odpowiedź:  ...
+
+## Zadanie 3-2:
+Pytanie:    *Jaka jest treść nadawnaego tekstu? Proszę zapisać postać jawną i zakodowaną.*  
+Odpowiedź:  ...
+
+## Zadanie 3-3:
+Pytanie:    *Kiedy programowe generowanie sygnału PWM ma zastosowanie i jakie pociąga to za sobą konsekwencje.*  
+Odpowiedź:  ...
+
+
