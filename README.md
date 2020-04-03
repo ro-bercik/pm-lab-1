@@ -6,9 +6,9 @@ Wersja: v1.0
 Data:   22.03.2020 r.  
 
 # Informacje o studencie
-Imię i nazwisko studenta:   Imię Nazwisko  
-Numer albumu:               00000  
-Grupa studencka:            WELE18xyS1  
+Imię i nazwisko studenta:   Bercik  
+Numer albumu:               99999  
+Grupa studencka:            WEL2000  
 
 # Pytania do zadań z instrukcji
 ## Zadanie 2-2-1a:
